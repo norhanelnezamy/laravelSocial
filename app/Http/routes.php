@@ -19,6 +19,7 @@ Route::auth();
 Route::get('/home', 'HomeController@index');
 Route::get('/profile/{id}', 'HomeController@profile');
 Route::post('/post/create','PostsController@store');
+Route::post('/post/update/{id}','PostsController@update');
 Route::get('/post/delete/{id}','PostsController@destroy');
 Route::get('/comment/delete/{id}','CommentsController@destroy');
 Route::get('/comments/show/{id}','CommentsController@show');

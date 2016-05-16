@@ -29,17 +29,6 @@ class PostsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -48,7 +37,18 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $validator = Validator::make($request->all(), ['edit_post' => 'required|regex:/^[(a-zA-Z\s)]+$/u']);
+      if ($validator->fails()){
+         return $validator->errors()->all();
+      }
+      $post = Post::find($id);
+      if ($post) {
+        $post->post = $request->edit_post;
+        $post->user_id = Auth::user()->id;
+        $post->save();
+        return 1;
+      }
+      return "not found...!";
     }
 
     /**
@@ -59,7 +59,11 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        Post::destroy($id);
-        return redirect()->back();
+        $post = Post::find($id);
+        if ($post) {
+          Post::destroy($id);
+          return 1;
+        }
+        return 0;
     }
 }

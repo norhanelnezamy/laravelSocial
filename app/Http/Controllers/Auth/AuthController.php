@@ -52,6 +52,7 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'profile_pic' => 'required|image|mimes:jpeg,bmp,png'
         ]);
     }
 
@@ -63,10 +64,18 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+      $destinationPath = 'image'; // upload path
+      $name = $data['profile_pic']->getClientOriginalName();
+      $fileName = date("Y_h:i:s_A").'_'.$name; // renameing image
+      $data['profile_pic']->move($destinationPath, $fileName);
+
+      $user = new User;
+      $user->name = $data['name'];
+      $user->email = $data['email'];
+      $user->password = bcrypt($data['password']);
+      $user->profile_pic = 'image/'.$fileName;
+      $user->save();
+      return $user;
+
     }
 }

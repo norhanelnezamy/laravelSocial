@@ -25,19 +25,38 @@
             </div>
 
             @foreach($posts_data as $PD)
-              <div class="panel panel-default">
+              <div class="panel panel-default" id="post_id_{{$PD->id}}">
                   <div class="panel-body">
                     <div class="panel-heading">
                     <ul class="nav nav-pills" >
                       <li role="presentation"><img src="/{{$PD->profile_pic}}" style="width:35px;height:35px;"></li>
                       <li role="presentation"><a href="/profile/{{$PD->user_id}}">{{ $PD->name }}</a></li>
                       <li role="presentation" style="margin-top:10px;"> posted new post at: {{$PD->created_at}}</li>
-                      <li class="dropdown">
+                      @if($PD->user_id == Auth::user()->id)
+                       <li class="dropdown" id="{{$PD->id}}" >
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
-                          <ul class="dropdown-menu" role="menu">
-                              <li><a href="/post/delete/{{$PD->id}}"><i class="fa fa-btn fa-sign-out"></i>Delete</a></li>
-                          </ul>
-                      </li>
+                            <ul class="dropdown-menu" role="menu">
+                              <li role="presentation"><input type="button" id="{{$PD->id}}" name="edit_post"  value="edit" class="btn btn-link" data-toggle="modal" data-target="#myModal_{{$PD->id}}" style="text-decoration:none;"/></li>
+                              <li role="presentation"><input type="button" id="{{$PD->id}}" name="delete_post"  value="delete" class="btn btn-link"style="text-decoration:none;"/></li>
+                            </ul>
+                       </li>
+                       <div class="modal fade" id="myModal_{{$PD->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                         <div class="modal-dialog" role="document">
+                           <div class="modal-content">
+                             <div class="modal-header">
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                               <h4 class="modal-title" id="myModalLabel">Edit Post</h4>
+                             </div>
+                             <div class="modal-body">
+                               <textarea rows="3" cols="60" id="edit_post_{{$PD->id}}">{{ $PD->post }}</textarea>
+                             </div>
+                             <div class="modal-footer">
+                               <input type="button" class="btn btn-primary" id="{{$PD->id}}" name="edit_post_model" value="Save changes">
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+                      @endif
                   </ul>
                   </div>
                   <p style="margin-left:10px;">{{ $PD->post }}</p>

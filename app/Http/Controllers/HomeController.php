@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use Auth;
 use DB;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -33,9 +34,13 @@ class HomeController extends Controller
     }
     public function profile($id)
     {
-      $posts_data = DB::table('posts')->join('users', 'user_id', '=', 'users.id')
-                ->select('users.*', 'posts.*')->where('user_id','=',$id)->orderBy('posts.created_at', 'desc')->get();
-                // return $posts_data;
-      return view('profile')->with(['posts_data'=>$posts_data]);
+      $user = User::find($id);
+      if ($user) {
+        $posts_data = DB::table('posts')->join('users', 'user_id', '=', 'users.id')
+                  ->select('users.*', 'posts.*')->where('user_id','=',$id)->orderBy('posts.created_at', 'desc')->get();
+                  // return $posts_data;
+        return view('profile')->with(['posts_data'=>$posts_data]);
+      }
+      abort(404);
     }
 }

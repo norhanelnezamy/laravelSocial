@@ -25,7 +25,7 @@
             </div>
 
             @foreach($posts_data as $PD)
-              <div class="panel panel-default">
+              <div class="panel panel-default" id="post_id_{{$PD->id}}">
                   <div class="panel-body">
                     <div class="panel-heading">
                     <ul class="nav nav-pills" >
@@ -36,13 +36,31 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="/post/delete/{{$PD->id}}"><i class="fa fa-btn fa-sign-out"></i>Delete</a></li>
+                              <li role="presentation"><input type="button" id="{{$PD->id}}" name="edit_post"  value="edit" class="btn btn-link"  data-toggle="modal" data-target="#myModal_{{$PD->id}}" style="text-decoration:none;"/></li>
+                              <li role="presentation"><input type="button" id="{{$PD->id}}" name="delete_post"  value="delete" class="btn btn-link"style="text-decoration:none;"/></li>
                             </ul>
                         </li>
+                        <div class="modal fade" id="myModal_{{$PD->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close_{{$PD->id}}"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Edit Post</h4>
+                              </div>
+                              <div class="modal-body">
+                                <textarea rows="3" cols="60" id="edit_post_{{$PD->id}}" name="edit_post">{{ $PD->post }}</textarea>
+                                <div id="model_error_{{$PD->id}}" style="width:91%;"></div>
+                              </div>
+                              <div class="modal-footer">
+                                <input type="button" class="btn btn-primary" id="{{$PD->id}}" name="edit_post_model" value="Save changes">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       @endif
                     </ul>
                   </div>
-                  <p style="margin-left:10px;">{{ $PD->post }}</p>
+                  <p style="margin-left:10px;" id="post_body_{{$PD->id}}">{{ $PD->post }}</p>
                   <form class="form-horizontal" role="form" method="POST" name="comment_form">
                       {!! csrf_field() !!}
                       <meta name="csrf-token" content="{{ csrf_token() }}">
