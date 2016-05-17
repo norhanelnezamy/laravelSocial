@@ -72,15 +72,27 @@
                       </ul>
                   </form>
                  <div id="comment_error_{{$PD->id}}" style="width:72%;"></div>
-                 <div id="div_{{$PD->id}}" name="div_{{$PD->id}}">
-                          {{-- @if($PD->user_id == Auth::user()->id)
-                            <li role="presentation"><a href="/comment/delete/{{$comment->id}}">X</a></li>
-                          @endif --}}
-                </div>
+                 <div id="div_{{$PD->id}}" name="div_{{$PD->id}}"></div>
                 </div>
               </div>
             @endforeach
-
+            <div class="modal fade" id="editCommentModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Edit comment</h4>
+                  </div>
+                  <div class="modal-body">
+                    <textarea rows="1" cols="60" id="edit_comment" name="edit_comment"></textarea>
+                    <div id="model_error" style="width:91%;"></div>
+                  </div>
+                  <div class="modal-footer">
+                    <input type="button" class="btn btn-primary" name="edit_comment_model" value="Save changes">
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
     </div>
 </div>

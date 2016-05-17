@@ -72,14 +72,11 @@
                   </form>
                     <div id="comment_error_{{$PD->id}}" style="width:72%;"></div>
                     <div id="div_{{$PD->id}}" name="div_{{$PD->id}}">
-                             {{-- @if($PD->user_id == Auth::user()->id)
-                               <li role="presentation"><a href="/comment/delete/{{$comment->id}}">X</a></li>
-                             @endif --}}
+
                    </div>
                   </div>
               </div>
             @endforeach
-
         </div>
     </div>
 </div>

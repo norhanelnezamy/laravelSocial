@@ -14,7 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
 Route::auth();
 Route::get('/home', 'HomeController@index');
 Route::get('/profile/{id}', 'HomeController@profile');
@@ -24,3 +23,4 @@ Route::get('/post/delete/{id}','PostsController@destroy');
 Route::get('/comment/delete/{id}','CommentsController@destroy');
 Route::get('/comments/show/{id}','CommentsController@show');
 Route::post('/comment/add','CommentsController@store');
+Route::post('/comment/update/{id}','CommentsController@update');
